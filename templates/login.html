@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Corbado Login</title>
+</head>
+<body>
+<script src="https://{{PROJECT_ID}}.frontendapi.corbado.io/auth.js"></script>
+<corbado-auth project-id="{{PROJECT_ID}}" conditional="yes">
+    <input name="username" id="corbado-username"
+           required autocomplete="webauthn"/>
+</corbado-auth>
+</body>
+</html>
