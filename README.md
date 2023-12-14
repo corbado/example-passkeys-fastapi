@@ -56,7 +56,7 @@ API_SECRET=<your-api-secret>
 
 #### Step 2.3: Configure Corbado project
 
-In the Corbado developer Panel, visit the [URLs settings](https://app.corbado.com/app/settings/general/urls) and set them to the values shown in the image below:
+In the Corbado developer Panel, visit the [URLs settings](https://app.corbado.com/app/settings/general/urls) and enter the values shown in the image below:
 <img width="1242" alt="image" src="https://github.com/corbado/example-passkeys-fastapi/assets/23581140/46063cc3-c412-4e4e-8de2-ca1f53cd15c1">
 
 
