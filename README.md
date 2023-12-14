@@ -70,7 +70,7 @@ docker compose up
 
 ### 3. Usage
 
-After step 2.2. your local server should be fully working.
+After step 2.4. your local server should be fully working.
 
 If you now visit [http://localhost:8000](http://localhost:8000), you should be able to sign up using the Corbado web component.
 
