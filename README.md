@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This project implements a web application with a login system using Corbado' passkey-first authentication service
+This project implements a web application with a login system using Corbado's passkey-first authentication service
 integrated with a FastAPI backend. The application consists of two main pages: a login page and a home page. Once users
 log in successfully via the Corbado service on the login page, they are redirected to the home page where they can log
 out and view protected content.
@@ -27,7 +27,6 @@ out and view protected content.
 ├── templates
 |   ├── index.html       # Login page
 |   └── profile.html     # Profile page
-
 ```
 
 ### 2. Setup
