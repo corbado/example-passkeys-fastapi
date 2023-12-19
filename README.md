@@ -24,9 +24,9 @@ out and view protected content.
 ```
 ├── .env                 # Contains all environment variables
 ├── main.py              # Contains our webapplication (Handles routes)
-├── templates
-|   ├── index.html       # Login page
-|   └── profile.html     # Profile page
+└── templates
+    ├── index.html       # Login page
+    └── profile.html     # Profile page
 ```
 
 ### 2. Setup
