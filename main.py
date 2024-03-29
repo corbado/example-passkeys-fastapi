@@ -22,6 +22,12 @@ short_session_cookie_name = "cbo_short_session"
 issuer = f"https://{PROJECT_ID}.frontendapi.corbado.io"
 jwks_uri = f"https://{PROJECT_ID}.frontendapi.corbado.io/.well-known/jwks"
 
+# Retrieve jwt public key
+response = requests.get(jwks_uri)
+response.raise_for_status()
+
+jwks = response.json()
+public_key = jwks["keys"][0]
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -36,12 +42,6 @@ async def get_profile(request: Request):
     try:
         if not token:
             raise ValueError("No token found")
-
-        response = requests.get(jwks_uri)
-        response.raise_for_status()
-
-        jwks = response.json()
-        public_key = jwks["keys"][0]
 
         payload = jwt.decode(
             token,
@@ -60,14 +60,14 @@ async def get_profile(request: Request):
             'USER_ID': payload["sub"],
             'USER_NAME': payload.get("name"),
             'USER_EMAIL': payload.get("email"),
-         }
+        }
 
         return templates.TemplateResponse("profile.html", context)
-    
+
     except Exception as e:
         print(e)
         return RedirectResponse(url="/login")
-    
+
 
 @app.get("/{path}", response_class=HTMLResponse)
 async def redirect_to_login(path: str):

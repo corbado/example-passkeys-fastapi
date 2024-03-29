@@ -2,34 +2,31 @@
 <html>
 <head>
     <title>Profile Page</title>
+    <link rel="stylesheet" href="https://unpkg.com/@corbado/web-js@1.1.16/dist/bundle/index.css"/>
+    <script src="https://unpkg.com/@corbado/web-js@1.1.16/dist/bundle/index.js"></script>
 </head>
 <body>
 
 <h2>:/protected 🔒</h2>
 <p>User ID: {{USER_ID}}</p>
-<p>Name: {{USER_NAME}}"</p>
-<p>Email: {{USER_EMAIL}}"</p>
-
-<script src="https://{{PROJECT_ID}}.frontendapi.corbado.io/auth.js"></script>
-<script src="https://{{PROJECT_ID}}.frontendapi.corbado.io/utility.js"></script>
+<p>Name: {{USER_NAME}}</p>
+<p>Email: {{USER_EMAIL}}</p>
 <button id="logoutButton">Logout</button>
 
-<script inline="javascript">
-    const projectID = "{{PROJECT_ID}}";
-    const session = new Corbado.Session(projectID);
-    // Get logout button
-    const logoutButton = document.getElementById('logoutButton');
-
-    // Add event listener to logout button
-    logoutButton.addEventListener('click', function() {
-        session.logout()
-            .then(() => {
-                window.location.replace("/");
-            })
-            .catch(err => {
-                console.error(err);
-            });
-    });
+<script>
+    Corbado.load({
+        projectId: "{{PROJECT_ID}}",
+        darkMode: 'off',
+        setShortSessionCookie: true,
+    }).then(() => {
+        // Get logout button
+        const logoutButton = document.getElementById('logoutButton');
+        // Add event listener to logout button
+        logoutButton.addEventListener('click', () => {
+            Corbado.logout()
+            window.location.href = "/"
+        });
+    })
 </script>
 </body>
 </html>
