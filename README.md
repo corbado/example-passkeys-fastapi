@@ -1,4 +1,4 @@
-# Passkey-First Authentication with FastAPI and Corbado
+# FastAPI Passkey Example App
 
 ## Project Overview
 
