@@ -1,12 +1,10 @@
-from fastapi import FastAPI, Request, HTTPException
+from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import RedirectResponse
-import requests
-from jose import jwt
 from dotenv import load_dotenv
 import os
+from werkzeug.exceptions import Unauthorized
+from corbado_python_sdk import Config, CorbadoSDK, UserEntity, SessionInterface
 
 load_dotenv()
 
@@ -14,64 +12,49 @@ app = FastAPI()
 
 templates = Jinja2Templates(directory="templates")
 
-PROJECT_ID = os.getenv("PROJECT_ID", "pro-xxx")
-API_SECRET = os.getenv("API_SECRET", "corbado1_xxx")
+PROJECT_ID: str = os.getenv("PROJECT_ID", "pro-xxx")
+API_SECRET: str = os.getenv("API_SECRET", "corbado1_xxx")
 
 # Session config
 short_session_cookie_name = "cbo_short_session"
-issuer = f"https://{PROJECT_ID}.frontendapi.corbado.io"
-jwks_uri = f"https://{PROJECT_ID}.frontendapi.corbado.io/.well-known/jwks"
 
+
+# Config has a default values for 'short_session_cookie_name' and 'BACKEND_API'
+config: Config = Config(
+    api_secret=API_SECRET,
+    project_id=PROJECT_ID,
+)
+
+# Initialize SDK
+sdk: CorbadoSDK = CorbadoSDK(config=config)
+sessions: SessionInterface = sdk.sessions
 
 
 @app.get("/", response_class=HTMLResponse)
 async def get_login(request: Request):
-    return templates.TemplateResponse("login.html", {"request": request, "PROJECT_ID": PROJECT_ID})
+    return templates.TemplateResponse(
+        "login.html", {"request": request, "PROJECT_ID": PROJECT_ID}
+    )
 
 
 @app.get("/profile", response_class=HTMLResponse)
 async def get_profile(request: Request):
-    token = request.cookies.get(short_session_cookie_name)
+    # Acquire cookies with your preferred method
+    token: str = request.cookies.get(config.short_session_cookie_name) or ""
+    user: UserEntity = sessions.get_current_user(short_session=token)
 
-    try:
-        if not token:
-            raise ValueError("No token found")
-
-        response = requests.get(jwks_uri)
-        response.raise_for_status()
-
-        jwks = response.json()
-        public_key = jwks["keys"][0]
-
-        payload = jwt.decode(
-            token,
-            key=public_key,
-            algorithms=["RS256"],
-            audience=API_SECRET,
-            issuer=issuer,
-        )
-
-        if payload["iss"] != issuer:
-            raise ValueError("Invalid issuer")
-
+    if user.authenticated:
         context = {
-            'request': request,
-            'PROJECT_ID': PROJECT_ID,
-            'USER_ID': payload["sub"],
-            'USER_NAME': payload.get("name"),
-            'USER_EMAIL': payload.get("email"),
-         }
-
+            "request": request,
+            "PROJECT_ID": PROJECT_ID,
+            "USER_ID": user.user_id,
+            "USER_NAME": user.name,
+            "USER_EMAIL": user.email,
+        }
         return templates.TemplateResponse("profile.html", context)
-    
-    except Exception as e:
-        print(e)
-        return RedirectResponse(url="/login")
-    
 
-@app.get("/{path}", response_class=HTMLResponse)
-async def redirect_to_login(path: str):
-    return RedirectResponse(url="/")
+    else:
+        raise Unauthorized()
 
 
 if __name__ == "__main__":

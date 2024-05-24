@@ -5,31 +5,32 @@
 </head>
 <body>
 
-<h2>:/protected 🔒</h2>
-<p>User ID: {{USER_ID}}</p>
-<p>Name: {{USER_NAME}}"</p>
-<p>Email: {{USER_EMAIL}}"</p>
-
-<script src="https://{{PROJECT_ID}}.frontendapi.corbado.io/auth.js"></script>
-<script src="https://{{PROJECT_ID}}.frontendapi.corbado.io/utility.js"></script>
-<button id="logoutButton">Logout</button>
-
-<script inline="javascript">
-    const projectID = "{{PROJECT_ID}}";
-    const session = new Corbado.Session(projectID);
-    // Get logout button
-    const logoutButton = document.getElementById('logoutButton');
-
-    // Add event listener to logout button
-    logoutButton.addEventListener('click', function() {
-        session.logout()
-            .then(() => {
+    <h2>:/protected 🔒</h2>
+    <p>User ID: {{USER_ID}}</p>
+    <p>Name: {{USER_NAME}}"</p>
+    <p>Email: {{USER_EMAIL}}</p>
+        <!-- Import Corbado SDK -->
+        <script src="https://{{ PROJECT_ID }}.frontendapi.corbado.io/auth.js"></script>
+        <script src="https://{{ PROJECT_ID }}.frontendapi.corbado.io/utility.js"></script>
+        <!-- Logout button -->
+        <button id="logoutButton">Logout</button>
+      
+        <script>
+          // Create a new session
+          const session = new Corbado.Session('{{ PROJECT_ID }}');
+          // Get logout button
+          const logoutButton = document.getElementById('logoutButton');
+      
+          // Add event listener to logout button
+          logoutButton.addEventListener('click', function() {
+            session.logout()
+              .then(() => {
                 window.location.replace("/");
-            })
-            .catch(err => {
+              })
+              .catch(err => {
                 console.error(err);
-            });
-    });
-</script>
+              });
+          });
+        </script>
 </body>
 </html>
