@@ -1,13 +1,26 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
-    <title>Corbado Login</title>
+    <title>Login Page</title>
+    <link rel="stylesheet" href="https://unpkg.com/@corbado/web-js@1.1.16/dist/bundle/index.css"/>
+    <script src="https://unpkg.com/@corbado/web-js@1.1.16/dist/bundle/index.js"></script>
 </head>
 <body>
-<script src="https://{{PROJECT_ID}}.frontendapi.corbado.io/auth.js"></script>
-<corbado-auth project-id="{{PROJECT_ID}}" conditional="yes">
-    <input name="username" id="corbado-username"
-           required autocomplete="webauthn"/>
-</corbado-auth>
+<div id="corbado-auth"></div>
+<script>
+    Corbado.load({
+        projectId: "{{PROJECT_ID}}",
+        darkMode: 'off',
+        setShortSessionCookie: true,
+    }).then(() => {
+        const authElement = document.getElementById('corbado-auth');
+        Corbado.mountAuthUI(authElement, {
+            onLoggedIn: () => {
+                window.location.href = '/profile';
+            },
+            isDevMode: true,
+        });
+    })
+</script>
 </body>
 </html>

@@ -9,4 +9,7 @@ services:
       - ./.env
     ports:
       - 8000:8000
-    restart: always
+    volumes:
+      - ./main.py:/app/main.py
+      - ./templates:/app/templates
+    restart: no
