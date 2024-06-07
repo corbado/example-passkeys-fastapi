@@ -1,36 +1,51 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Profile Page</title>
-</head>
-<body>
-
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@corbado/web-js@2.8.0/dist/bundle/index.css"
+      />
+      <script src="https://unpkg.com/@corbado/web-js@2.8.0/dist/bundle/index.js"></script>
+    </head>
+    <body>
+      
+      <!-- Define passkey-list div and logout button -->
     <h2>:/protected 🔒</h2>
     <p>User ID: {{USER_ID}}</p>
-    <p>Name: {{USER_NAME}}"</p>
+    <p>Name: {{USER_NAME}}</p>
     <p>Email: {{USER_EMAIL}}</p>
-        <!-- Import Corbado SDK -->
-        <script src="https://{{ PROJECT_ID }}.frontendapi.corbado.io/auth.js"></script>
-        <script src="https://{{ PROJECT_ID }}.frontendapi.corbado.io/utility.js"></script>
-        <!-- Logout button -->
-        <button id="logoutButton">Logout</button>
-      
-        <script>
-          // Create a new session
-          const session = new Corbado.Session('{{ PROJECT_ID }}');
-          // Get logout button
-          const logoutButton = document.getElementById('logoutButton');
-      
-          // Add event listener to logout button
-          logoutButton.addEventListener('click', function() {
-            session.logout()
-              .then(() => {
-                window.location.replace("/");
-              })
-              .catch(err => {
-                console.error(err);
-              });
-          });
-        </script>
+    <div id="passkey-list"></div>
+    <button id="logoutButton">Logout</button>
+
+
+    <!-- Script to load Corbado and mount PasskeyList UI -->
+    <script>
+        (async () => {
+            await Corbado.load({
+                projectId: "{{ PROJECT_ID }}",
+                darkMode: "off",
+                setShortSessionCookie: "true" // set short session cookie automatically
+            }); 
+            
+            // Get and mount PasskeyList UI
+            const passkeyListElement = document.getElementById("passkey-list"); // Element where you want to render PasskeyList UI
+            Corbado.mountPasskeyListUI(passkeyListElement);
+
+            // Get logout button
+            const logoutButton = document.getElementById('logoutButton');
+            // Add event listener to logout button
+            logoutButton.addEventListener('click', function() {
+              Corbado.logout()
+                    .then(() => {
+                        window.location.replace("/");
+                    })
+                    .catch(err => {
+                        console.error(err);
+                    });
+            });
+        })();
+    </script>
+    
+
 </body>
 </html>
