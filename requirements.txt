@@ -1,3 +1,2 @@
 fastapi
-Werkzeug
-passkeys>=1.0.0
+passkeys>=1.0.1
