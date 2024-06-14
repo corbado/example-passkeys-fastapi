@@ -1,9 +1,8 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Response
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from dotenv import load_dotenv
 import os
-from werkzeug.exceptions import Unauthorized
 from corbado_python_sdk import Config, CorbadoSDK, UserEntity, SessionInterface
 
 load_dotenv()
@@ -54,7 +53,7 @@ async def get_profile(request: Request):
         return templates.TemplateResponse("profile.html", context)
 
     else:
-        raise Unauthorized()
+        return Response(content="You are not authenticated or have not yet confirmed your email.", status_code=401)
 
 
 if __name__ == "__main__":
