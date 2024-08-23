@@ -1,2 +1,5 @@
 fastapi
 passkeys>=1.0.1
+Jinja2
+uvicorn
+python-dotenv
