@@ -12,9 +12,8 @@ import os
 from corbado_python_sdk import (
     Config,
     CorbadoSDK,
-    IdentifierInterface,
-    SessionInterface,
 )
+from corbado_python_sdk.services import SessionService, IdentifierService, UserService
 
 
 load_dotenv()
@@ -38,8 +37,8 @@ config: Config = Config(
 
 # Initialize SDK
 sdk: CorbadoSDK = CorbadoSDK(config=config)
-sessions: SessionInterface = sdk.sessions
-identifiers: IdentifierInterface = sdk.identifiers
+sessions: SessionService = sdk.sessions
+identifiers: IdentifierService = sdk.identifiers
 
 
 @app.get("/", response_class=HTMLResponse)
