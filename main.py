@@ -13,7 +13,7 @@ from corbado_python_sdk import (
     Config,
     CorbadoSDK,
 )
-from corbado_python_sdk.services import SessionService, IdentifierService, UserService
+from corbado_python_sdk import SessionService, IdentifierService, UserService
 
 
 load_dotenv()
