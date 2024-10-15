@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 3000
 
 # Run app
-CMD ["uvicorn", "main:app", "--host", "localhost", "--port", "3000"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "3000"]

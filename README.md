@@ -74,10 +74,9 @@ docker compose up
 
 After step [2.4](#step-24-run-the-project), your local server should be fully working.
 
-If you now visit [http://localhost:8000](http://localhost:8000), you should be able to sign up using the Corbado UI component.
+If you now visit [http://localhost:3000](http://localhost:3000), you should be able to sign up using the Corbado UI component.
 
 <img width="1177" alt="fastapi passkeys ui component" src="https://github.com/user-attachments/assets/287b8c4b-e18d-4d76-9ec0-0e86985d656b">
-
 
 When authenticated you will be forwarded to the `/profile` page.
 
