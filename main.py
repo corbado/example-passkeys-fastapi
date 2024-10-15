@@ -12,9 +12,8 @@ import os
 from corbado_python_sdk import (
     Config,
     CorbadoSDK,
-    IdentifierInterface,
-    SessionInterface,
 )
+from corbado_python_sdk import SessionService, IdentifierService, UserService
 
 
 load_dotenv()
@@ -38,8 +37,8 @@ config: Config = Config(
 
 # Initialize SDK
 sdk: CorbadoSDK = CorbadoSDK(config=config)
-sessions: SessionInterface = sdk.sessions
-identifiers: IdentifierInterface = sdk.identifiers
+sessions: SessionService = sdk.sessions
+identifiers: IdentifierService = sdk.identifiers
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -82,4 +81,4 @@ async def get_profile(request: Request):
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=3000, reload=True)
