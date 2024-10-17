@@ -15,19 +15,13 @@ from corbado_python_sdk import (
 )
 from corbado_python_sdk import SessionService, IdentifierService, UserService
 
-
 load_dotenv()
-
 app = FastAPI()
 
 templates = Jinja2Templates(directory="templates")
 
 PROJECT_ID: str = os.getenv("PROJECT_ID", "pro-xxx")
 API_SECRET: str = os.getenv("API_SECRET", "corbado1_xxx")
-
-# Session config
-short_session_cookie_name = "cbo_short_session"
-
 
 # Config has a default values for 'short_session_cookie_name' and 'BACKEND_API'
 config: Config = Config(
@@ -51,9 +45,9 @@ async def get_login(request: Request):
 @app.get("/profile", response_class=HTMLResponse)
 async def get_profile(request: Request):
     # Acquire cookies with your preferred method
-    token: str = request.cookies.get(config.short_session_cookie_name) or ""
+    sessionToken: str = request.cookies.get("cbo_session_token") or ""
     validation_result: SessionValidationResult = (
-        sessions.get_and_validate_short_session_value(short_session=token)
+        sessions.get_and_validate_short_session_value(short_session=sessionToken)
     )
     if validation_result.authenticated:
 
