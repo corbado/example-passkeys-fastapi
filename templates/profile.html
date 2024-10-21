@@ -23,9 +23,8 @@
         (async () => {
             await Corbado.load({
                 projectId: "{{ PROJECT_ID }}",
-                darkMode: "off",
-                setShortSessionCookie: "true" // set short session cookie automatically
-            }); 
+                darkMode: "off"
+            });
             
             // Get and mount PasskeyList UI
             const passkeyListElement = document.getElementById("passkey-list"); // Element where you want to render PasskeyList UI
