@@ -3,9 +3,9 @@
   <head>
     <link
       rel="stylesheet"
-      href="https://unpkg.com/@corbado/web-js@2.8.0/dist/bundle/index.css"
+      href="https://unpkg.com/@corbado/web-js@2/dist/bundle/index.css"
     />
-    <script src="https://unpkg.com/@corbado/web-js@2.8.0/dist/bundle/index.js"></script>
+    <script src="https://unpkg.com/@corbado/web-js@2/dist/bundle/index.js"></script>
   </head>
   
   <body>
@@ -13,8 +13,7 @@
       (async () => {
         await Corbado.load({
           projectId: "{{ PROJECT_ID }}",
-          darkMode: "off",
-          setShortSessionCookie: "true", //set short session cookie automatically 
+          darkMode: "off"
         });
         const authElement = document.getElementById('corbado-auth'); //Element where you want to render CorbadoAuth UI
         Corbado.mountAuthUI(authElement, {
